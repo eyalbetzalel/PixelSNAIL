@@ -15,8 +15,7 @@ import tensorflow as tf
 from tensorflow.python.framework.dtypes import _NP_TO_TF
 from tensorflow.python.util import nest
 
-NP_TO_TF = {np_type: tf_type for np_type, tf_type in _NP_TO_TF}
-
+# NP_TO_TF = {np_type: tf_type for np_type, tf_type in _NP_TO_TF} - Eyal's change
 
 class Struct(dict):
   """A dict that exposes its entries as attributes."""
@@ -123,7 +122,7 @@ def Session(devices=None, frac=None, **config):
 def vdef(*shape, dtype=tf.float32):
   shape = nest.flatten(shape)
   if len(shape) > 0:
-    if isinstance(shape[-1], tf.DType) or shape[-1] in NP_TO_TF or isinstance(shape[-1], np.dtype):
+    if isinstance(shape[-1], tf.DType) or shape[-1] in _NP_TO_TF or isinstance(shape[-1], np.dtype):
       dtype = shape.pop(-1)
   return Struct(shape=concat_shapes(*shape), dtype=dtype)
 
